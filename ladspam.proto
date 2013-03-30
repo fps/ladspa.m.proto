@@ -1,0 +1,89 @@
+package ladspam;
+
+/*
+	A Ladspa plugin..
+*/
+message Plugin {
+	required string library = 1;
+	required string label = 2;
+}
+
+/*
+	A connection between two plugins
+	to be used in a Synth.
+*/
+message Connection {
+	required int32 source_plugin_index = 1;
+	required int32 source_port_index = 2;
+	required int32 sink_plugin_index = 3;
+	required int32 sink_port_index = 4;
+}
+
+/*
+	A value for an unconnected port.
+*/
+message Value {
+	required int32 port_index = 1;
+	required float value = 2;
+}
+
+/*
+	An effects rack. Audio port connections
+	are implicit by the order of plugins.
+
+	Additional connections for control ports
+	can also be specified with the connections
+	field. 
+
+	If some implied connections are to be 
+	removed, specify them with the 
+	disconnections field.
+*/
+message Rack {
+	repeated Plugin plugins = 1;
+	repeated Connection connections = 2;
+	repeated Connection disconnections = 3;
+	repeated Value values = 4;
+}
+
+/*
+	A synth.
+*/
+message Synth {
+	repeated Plugin plugins = 1;
+	repeated Connection connections = 2;
+	repeated Value values = 3;
+}
+
+/*
+	A synth with an effects rack
+	for processing input and output
+	respectively.
+*/
+message SynthWithRacks {
+	optional Synth synth = 1;
+	optional Rack input_rack = 2;
+	optional Rack output_rack = 3;
+}
+
+
+/*
+	A polyphonic synth is just like
+	a synth but with a number of identical
+	instances of a synth.
+*/
+message PolyphonicSynth {
+	required SynthWithRacks synth = 1;
+	required int32 polyphony = 2;
+}
+
+/*
+	An instrument is just a polyphonic
+	synth 
+*/
+message Instrument {
+	required SynthWithRacks synth = 1;
+	required int32 polyphony = 2;
+}
+
+

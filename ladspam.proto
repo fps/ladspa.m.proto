@@ -96,18 +96,21 @@ message VoiceAllocator {
 }
 
 /*
-	An instrument is just a polyphonic
-	synth together with a voice allocation
-	strategy.
+	An instrument is just a multisynth 
+	together with a voice allocation strategy.
 	
 	The voice allocator defines implicit ports:
 	index 0 - 127: midi CC messages
 	index 128: trigger
 	index 129: gate
 	index 130: frequency
-	index 131: velocity
+	index 131: velocity 
 	
 	index 132....: the ports of the synth
+	
+	An instrument must provide an interface to
+	the outside that is a "traditional" instrument
+	interface. E.g. a midi port. 
 */
 message Instrument {
 	required VoiceAllocator voice_allocator = 1;

@@ -1,3 +1,6 @@
+# Generates a very simple rack definition with just 
+# a Freeverb and a SC4 plugin.
+
 from ladspam_pb2 import *
 
 rack = Rack()

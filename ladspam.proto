@@ -13,7 +13,7 @@ message Value {
 	A Ladspa plugin..
 */
 message Plugin {
-	required string library = 1;
+	optional string library = 1;
 	required string label = 2;
 	repeated Value values = 3;
 }
@@ -105,7 +105,8 @@ message VoiceAllocator {
 	index 130: frequency
 	index 131: velocity 
 	
-	index 132....: the ports of the synth
+	These can be connected to the synth's ports. Which start
+	counting at 0.
 	
 	An instrument must provide an interface to
 	the outside that is a "traditional" instrument

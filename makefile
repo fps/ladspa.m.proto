@@ -1,4 +1,4 @@
-.PHONY: all install
+.PHONY: all install examples
 
 PREFIX ?= /usr/local
 
@@ -15,3 +15,8 @@ install: all
 	install -d $(PREFIX)/lib
 	install libladspam.pb.so $(PREFIX)/lib
 
+
+examples: example_rack.pb 
+
+example_rack.pb: example_rack.py
+	python example_rack.py > example_rack.pb

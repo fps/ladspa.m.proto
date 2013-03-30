@@ -53,37 +53,66 @@ message Synth {
 	repeated Plugin plugins = 1;
 	repeated Connection connections = 2;
 	repeated Value values = 3;
+	optional Rack input_rack = 4;
+	optional Rack output_rack = 5;
 }
 
 /*
-	A synth with an effects rack
-	for processing input and output
-	respectively.
-*/
-message SynthWithRacks {
-	optional Synth synth = 1;
-	optional Rack input_rack = 2;
-	optional Rack output_rack = 3;
-}
-
-
-/*
-	A polyphonic synth is just like
+	A multi synth is just like
 	a synth but with a number of identical
 	instances of a synth.
+
+	The input and output racks will be 
+	instantiated only once. 
+
+	A number of additional connections can
+	be specified to create interplay between
+	the different synths. And to connect
+	the outputs of the individual synths to
+	the input and output racks.
 */
-message PolyphonicSynth {
-	required SynthWithRacks synth = 1;
-	required int32 polyphony = 2;
+message MultiSynth {
+	required Synth synth = 1;
+	required int32 instances = 2;
+	repeated Connection connections = 3;
+	repeated Connection disconnections = 4;
+	optional Rack input_rack = 5;
+	optional Rack output_rack = 6;
+}
+
+/*
+	A voice allocator represents a strategy
+	for allocating a limited amount of 
+	voices. To be used in an instrument.
+*/
+message VoiceAllocator {
+	enum Strategy {
+		ROUND_ROBIN = 1;
+		USE_OLDEST = 2;
+		RANDOM = 3;
+	}
+	
+	required Strategy strategy = 1;
 }
 
 /*
 	An instrument is just a polyphonic
-	synth 
+	synth together with a voice allocation
+	strategy.
+	
+	The voice allocator defines implicit ports:
+	index 0 - 127: midi CC messages
+	index 128: trigger
+	index 129: gate
+	index 130: frequency
+	index 131: velocity
+	
+	index 132....: the ports of the synth
 */
 message Instrument {
-	required SynthWithRacks synth = 1;
-	required int32 polyphony = 2;
+	required VoiceAllocator voice_allocator = 1;
+	required MultiSynth synth = 2;
+	repeated Connection connections = 3;
 }
 
 

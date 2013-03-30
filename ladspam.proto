@@ -54,6 +54,7 @@ message Synth {
 	repeated Connection connections = 2;
 	optional Rack input_rack = 4;
 	optional Rack output_rack = 5;
+	repeated Connection rack_connections = 6;
 }
 
 /*

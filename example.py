@@ -5,17 +5,21 @@ from ladspam_pb2 import *
 
 synth = Synth()
 
+# A freeverb
+
 freeverb = synth.plugins.add()
 freeverb.library = '/usr/lib/ladspa/cmt.so'
 freeverb.label = 'freeverb3'
 
 wet_value = freeverb.values.add()
-wet_value.port_index = 8
-wet_value.value = 0.3
+wet_value.port_index = 7
+wet_value.value = 0.9
 
 room_size = freeverb.values.add()
 room_size.port_index = 5
-room_size.value = 0.8
+room_size.value = 0.95
+
+# A stereo compressor
 
 sc4 = synth.plugins.add()
 sc4.library = '/usr/lib/ladspa/sc4_1882.so'
@@ -29,4 +33,57 @@ ratio = sc4.values.add()
 ratio.port_index = 4
 ratio.value = 10
 
-print(synth.SerializeToString())
+# Inside connections
+
+connection1 = synth.connections.add()
+connection1.source_plugin_index = 0
+connection1.source_port_index = 2
+connection1.sink_plugin_index = 1
+connection1.sink_port_index = 9
+
+connection2 = synth.connections.add()
+connection2.source_plugin_index = 0
+connection2.source_port_index = 3
+connection2.sink_plugin_index = 1
+connection2.sink_port_index = 10
+
+# Exposed Ports
+
+input1 = synth.exposed_ports.add()
+input1.plugin_index = 0
+input1.port_index = 0
+
+input2 = synth.exposed_ports.add()
+input2.plugin_index = 0
+input2.port_index = 1
+
+output3 = synth.exposed_ports.add()
+output3.plugin_index = 0
+output3.port_index = 2
+
+output4 = synth.exposed_ports.add()
+output4.plugin_index = 0
+output4.port_index = 3
+
+output5 = synth.exposed_ports.add()
+output5.plugin_index = 1
+output5.port_index = 11
+
+output6 = synth.exposed_ports.add()
+output6.plugin_index = 1
+output6.port_index = 12
+
+
+saw = synth.plugins.add()
+saw.library = '/usr/lib/ladspa/sawtooth_1641.so'
+saw.label = 'sawtooth_fa_oa'
+
+output5 = synth.exposed_ports.add()
+output5.plugin_index = 2
+output5.port_index = 1
+
+
+
+f = open("/dev/stdout", "wb")
+f.write(synth.SerializeToString())
+f.close()

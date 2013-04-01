@@ -29,6 +29,10 @@ message Connection {
 	required int32 sink_port_index = 4;
 }
 
+message Port {
+	required int32 plugin_index = 1;
+	required int32 port_index = 2;
+}
 
 /*
 	A synth.
@@ -36,5 +40,6 @@ message Connection {
 message Synth {
 	repeated Plugin plugins = 1;
 	repeated Connection connections = 2;
+	repeated Port exposed_ports = 3;
 }
 

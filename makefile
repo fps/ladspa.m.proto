@@ -14,6 +14,7 @@ generated: ladspam.proto
 install: all
 	install -d $(PREFIX)/lib
 	install libladspam.pb.so $(PREFIX)/lib
+	install -d $(PREFIX)/include
 	install ladspam.pb.h $(PREFIX)/include
 
 

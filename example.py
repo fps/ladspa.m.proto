@@ -3,9 +3,9 @@
 
 from ladspam_pb2 import *
 
-rack = Rack()
+synth = Synth()
 
-freeverb = rack.plugins.add()
+freeverb = synth.plugins.add()
 freeverb.library = '/usr/lib/ladspa/cmt.so'
 freeverb.label = 'freeverb3'
 
@@ -17,7 +17,7 @@ room_size = freeverb.values.add()
 room_size.port_index = 5
 room_size.value = 0.8
 
-sc4 = rack.plugins.add()
+sc4 = synth.plugins.add()
 sc4.library = '/usr/lib/ladspa/sc4_1882.so'
 sc4.label = 'sc4'
 
@@ -29,4 +29,4 @@ ratio = sc4.values.add()
 ratio.port_index = 4
 ratio.value = 10
 
-print(rack.SerializeToString())
+print(synth.SerializeToString())

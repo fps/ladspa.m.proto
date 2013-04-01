@@ -44,7 +44,19 @@ message Synth {
 }
 
 /*
-	An instrument
+	An instrument. For each voice there
+	will be ports:
+	
+	0 trigger
+	1 gate
+	2 note_on_velocity
+	3 note_off_velocty
+	4 frequency
+	
+	So connections here take as source_index
+	the voice number and as source_port_index
+	one of the numbers above. The sink_index
+	references any plugin in the synth.
 */
 message Instrument {
 	required Synth synth = 1;

@@ -3,7 +3,10 @@
 
 from ladspam_pb2 import *
 
-synth = Synth()
+instrument = Instrument()
+instrument.number_of_voices = 5
+
+synth = instrument.synth
 
 # A freeverb
 
@@ -57,14 +60,6 @@ input2 = synth.exposed_ports.add()
 input2.plugin_index = 0
 input2.port_index = 1
 
-output3 = synth.exposed_ports.add()
-output3.plugin_index = 0
-output3.port_index = 2
-
-output4 = synth.exposed_ports.add()
-output4.plugin_index = 0
-output4.port_index = 3
-
 output5 = synth.exposed_ports.add()
 output5.plugin_index = 1
 output5.port_index = 11
@@ -73,17 +68,6 @@ output6 = synth.exposed_ports.add()
 output6.plugin_index = 1
 output6.port_index = 12
 
-
-saw = synth.plugins.add()
-saw.library = '/usr/lib/ladspa/sawtooth_1641.so'
-saw.label = 'sawtooth_fa_oa'
-
-output5 = synth.exposed_ports.add()
-output5.plugin_index = 2
-output5.port_index = 1
-
-
-
 f = open("/dev/stdout", "wb")
-f.write(synth.SerializeToString())
+f.write(instrument.SerializeToString())
 f.close()

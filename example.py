@@ -36,15 +36,15 @@ ratio.value = 10
 # Inside connections
 
 connection1 = synth.connections.add()
-connection1.source_plugin_index = 0
+connection1.source_index = 0
 connection1.source_port_index = 2
-connection1.sink_plugin_index = 1
+connection1.sink_index = 1
 connection1.sink_port_index = 9
 
 connection2 = synth.connections.add()
-connection2.source_plugin_index = 0
+connection2.source_index = 0
 connection2.source_port_index = 3
-connection2.sink_plugin_index = 1
+connection2.sink_index = 1
 connection2.sink_port_index = 10
 
 # Exposed Ports

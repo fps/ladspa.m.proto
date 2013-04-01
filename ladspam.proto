@@ -23,9 +23,9 @@ message Plugin {
 	to be used in a Synth/Instrument
 */
 message Connection {
-	required int32 source_plugin_index = 1;
+	required int32 source_index = 1;
 	required int32 source_port_index = 2;
-	required int32 sink_plugin_index = 3;
+	required int32 sink_index = 3;
 	required int32 sink_port_index = 4;
 }
 

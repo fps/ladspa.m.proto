@@ -23,28 +23,12 @@ message Plugin {
 	to be used in a Synth/Rack/Instrument
 */
 message Connection {
-	required int32 source_port_index = 1;
-	required int32 sink_port_index = 2;
+	required int32 source_plugin_index = 1;
+	required int32 source_port_index = 2;
+	required int32 sink_plugin_index = 3;
+	required int32 sink_port_index = 4;
 }
 
-
-/*
-	An effects rack. Audio port connections
-	are implicit by the order of plugins.
-
-	Additional connections for control ports
-	can also be specified with the connections
-	field. 
-
-	If some implied connections are to be 
-	removed, specify them with the 
-	disconnections field.
-*/
-message Rack {
-	repeated Plugin plugins = 1;
-	repeated Connection connections = 2;
-	repeated Connection disconnections = 3;
-}
 
 /*
 	A synth.
@@ -52,71 +36,5 @@ message Rack {
 message Synth {
 	repeated Plugin plugins = 1;
 	repeated Connection connections = 2;
-	optional Rack input_rack = 4;
-	optional Rack output_rack = 5;
-	repeated Connection rack_connections = 6;
 }
-
-/*
-	A multi synth is just like
-	a synth but with a number of identical
-	instances of a synth.
-
-	The input and output racks will be 
-	instantiated only once. 
-
-	A number of additional connections can
-	be specified to create interplay between
-	the different synths. And to connect
-	the outputs of the individual synths to
-	the input and output racks.
-*/
-message MultiSynth {
-	required Synth synth = 1;
-	required int32 instances = 2;
-	repeated Connection connections = 3;
-	repeated Connection disconnections = 4;
-	optional Rack input_rack = 5;
-	optional Rack output_rack = 6;
-}
-
-/*
-	A voice allocator represents a strategy
-	for allocating a limited amount of 
-	voices. To be used in an instrument.
-*/
-message VoiceAllocator {
-	enum Strategy {
-		ROUND_ROBIN = 1;
-		USE_OLDEST = 2;
-		RANDOM = 3;
-	}
-	
-	required Strategy strategy = 1;
-}
-
-/*
-	An instrument is just a multisynth 
-	together with a voice allocation strategy.
-	
-	The voice allocator defines implicit ports:
-	index 0 - 127: midi CC messages
-	index 128: trigger
-	index 129: gate
-	index 130: frequency
-	index 131: velocity 
-	
-	These can be connected to the synth's ports. Which start
-	counting at 0.
-	
-	An instrument must provide an interface to
-	the outside that is a "traditional" instrument
-	interface. E.g. a midi port. 
-*/
-message Instrument {
-	required VoiceAllocator voice_allocator = 1;
-	required MultiSynth synth = 2;
-	repeated Connection connections = 3;
-}
-
 

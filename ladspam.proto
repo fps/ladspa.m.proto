@@ -49,9 +49,10 @@ message Synth {
 	
 	0 trigger
 	1 gate
-	2 note_on_velocity
-	3 note_off_velocty
-	4 frequency
+	3 note_on_velocity
+	4 frequency - absolute
+	5 frequency - scaled by sample rate
+	6 note_off_velocty
 	
 	So connections here take as source_index
 	the voice number and as source_port_index

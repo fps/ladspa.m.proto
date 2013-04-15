@@ -1,4 +1,4 @@
-.PHONY: all install examples
+.PHONY: all install examples 
 
 PREFIX ?= /usr/local
 

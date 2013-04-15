@@ -50,13 +50,17 @@ message Synth {
 	0 trigger
 	1 gate
 	2 note_on_velocity
-	3 note_off_velocty
-	4 frequency
+	3 frequency
 	
 	So connections here take as source_index
 	the voice number and as source_port_index
 	one of the numbers above. The sink_index
 	references any plugin in the synth.
+	
+	Note some synth implementations might 
+	provide additional ports, like 
+	note_off_velocity or frequency scaled
+	by the samplerate
 */
 message Instrument {
 	required Synth synth = 1;

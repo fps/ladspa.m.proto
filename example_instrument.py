@@ -1,8 +1,7 @@
 from ladspam_pb2 import *
 
-def add_plugin(synth, library, label):
+def add_plugin(synth, label):
 	plugin = synth.plugins.add()
-	plugin.library = library
 	plugin.label = label
 	return plugin
 
@@ -39,18 +38,18 @@ synth = instrument.synth
 number_of_plugins = 0
 
 for n in range(5):
-	plugin = add_plugin(synth, '/usr/lib/ladspa/dahdsr_fexp.so', 'dahdsr_fexp')
+	plugin = add_plugin(synth, 'dahdsr_fexp')
 	set_port_value(plugin, 6, 0)
 	set_port_value(plugin, 5, 0.2)
 	
 	
 	number_of_plugins += 1
 
-	add_plugin(synth,'/usr/lib/ladspa/sawtooth_1641.so', 'sawtooth_fa_oa')
+	add_plugin(synth, 'sawtooth_fa_oa')
 
 	number_of_plugins += 1
 
-	add_plugin(synth,'/usr/lib/ladspa/product_1668.so', 'product_iaia_oa')
+	add_plugin(synth, 'product_iaia_oa')
 
 	number_of_plugins += 1
 
@@ -63,7 +62,7 @@ for n in range(5):
 	make_voice_connection(instrument, n, 1, number_of_plugins - 3, 0)
 	make_voice_connection(instrument, n, 3, number_of_plugins - 2, 0)
 
-	plugin = add_plugin(synth,'/usr/lib/ladspa/delay.so', 'delay_5s')
+	plugin = add_plugin(synth, 'delay_5s')
 	set_port_value(plugin, 0, (1 + n) * 0.125)
 	set_port_value(plugin, 1, 0.25)
 
@@ -71,7 +70,7 @@ for n in range(5):
 	
 	make_connection(synth, number_of_plugins - 2, 2, number_of_plugins - 1, 2)
 
-add_plugin(synth,'/usr/lib/ladspa/sum_1665.so', 'sum_iaia_oa')
+add_plugin(synth, 'sum_iaia_oa')
 
 number_of_plugins += 1
 	

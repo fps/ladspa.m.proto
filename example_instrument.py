@@ -30,14 +30,16 @@ def expose_port(synth, plugin_index, port_index):
 	port.port_index = port_index
 	
 
+number_of_voices = 3
+
 instrument = Instrument()
-instrument.number_of_voices = 5
+instrument.number_of_voices = number_of_voices
 
 synth = instrument.synth
 
 number_of_plugins = 0
 
-for n in range(5):
+for n in range(number_of_voices):
 	plugin = add_plugin(synth, 'dahdsr_fexp')
 	set_port_value(plugin, 2, 0.0)
 	set_port_value(plugin, 3, 0.0)
@@ -82,7 +84,7 @@ number_of_plugins += 1
 expose_port(synth, number_of_plugins - 1, 2)
 expose_port(synth, number_of_plugins - 1, 2)
 
-for n in range(5):
+for n in range(number_of_voices):
 	make_connection(synth, 4 * n + 3, 3, number_of_plugins - 1, 0)
 	pass
 

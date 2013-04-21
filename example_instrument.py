@@ -39,13 +39,18 @@ number_of_plugins = 0
 
 for n in range(5):
 	plugin = add_plugin(synth, 'dahdsr_fexp')
-	set_port_value(plugin, 6, 0)
-	set_port_value(plugin, 5, 0.2)
+	set_port_value(plugin, 2, 0.0)
+	set_port_value(plugin, 3, 0.0)
+	set_port_value(plugin, 4, 0.0)
+	set_port_value(plugin, 5, 0.8)
+	set_port_value(plugin, 6, 0.3)
+	set_port_value(plugin, 7, 0.2)
 	
 	
 	number_of_plugins += 1
 
-	add_plugin(synth, 'sawtooth_fa_oa')
+	plugin = add_plugin(synth, 'sawtooth_fa_oa')
+	# set_port_value(plugin, 0, 4 * 880)
 
 	number_of_plugins += 1
 
@@ -63,7 +68,7 @@ for n in range(5):
 	make_voice_connection(instrument, n, 3, number_of_plugins - 2, 0)
 
 	plugin = add_plugin(synth, 'delay_5s')
-	set_port_value(plugin, 0, (1 + n) * 0.125)
+	set_port_value(plugin, 0, (1 + n) * 0.250)
 	set_port_value(plugin, 1, 0.25)
 
 	number_of_plugins += 1
@@ -74,6 +79,7 @@ add_plugin(synth, 'sum_iaia_oa')
 
 number_of_plugins += 1
 	
+expose_port(synth, number_of_plugins - 1, 2)
 expose_port(synth, number_of_plugins - 1, 2)
 
 for n in range(5):

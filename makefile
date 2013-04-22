@@ -18,7 +18,6 @@ install: all
 	install ladspam.pb.h $(PREFIX)/include
 
 
-examples: example_rack.pb 
+examples:  
+	generate_examples.sh
 
-example_rack.pb: example_rack.py
-	python example_rack.py > example_rack.pb

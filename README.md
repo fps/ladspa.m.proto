@@ -32,6 +32,14 @@ type
 make
 </pre>
 
+You can generate the example definition files by typing:
+
+<pre>
+make examples
+</pre>
+
+which will run the python scripts in examples.py to generate the corresponding definition files in examples.pb.
+
 # Installation
 
 type

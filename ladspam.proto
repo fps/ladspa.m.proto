@@ -2,7 +2,7 @@ package ladspam_pb;
 
 /*
 	A value for an unconnected port.
-	Note: Use this only for input ports.
+	Note: Use this only for input ports. Port indices are always absolute. 
 */
 message Value {
 	required int32 port_index = 1;
@@ -10,7 +10,12 @@ message Value {
 }
 
 /*
-	A Ladspa plugin..
+	A Ladspa plugin.. If you do not specify the library, then 
+	a host is required to search the system (e.g. LADSPA_PATH)
+	for plugins that have a matching label.
+	
+	If you do specify a library file, then the host will try to 
+	load the plugin from that exact library file.
 */
 message Plugin {
 	optional string library = 1;
@@ -21,6 +26,16 @@ message Plugin {
 /*
 	A connection between two ports
 	to be used in a Synth/Instrument
+	
+	Note: Port indices are always absolute. 
+	
+	Note: The meaning of the source_index and
+	source_port_index are different when used in 
+	a] a synth or b] an instrument. 
+	
+	In case a] they refer to plugin/port indices.
+	
+	In case b] they refer to voice/port indices.
 */
 message Connection {
 	required int32 source_index = 1;
@@ -29,6 +44,14 @@ message Connection {
 	required int32 sink_port_index = 4;
 }
 
+/*
+	Use this to specify what ports to expose in a host.
+	
+	How these ports are exposed is host-implementation dependent. The
+	ladspa.m.lv2 plugin for example has two input and two output 
+	ports, so any exposed ports beyond that will be ignored.
+	Note that you can expose a port more than once.
+*/
 message Port {
 	required int32 plugin_index = 1;
 	required int32 port_index = 2;
@@ -36,6 +59,10 @@ message Port {
 
 /*
 	A synth.
+	
+	Note: The order of plugins matters. They plugins
+	are executed by a host in exactly the order in 
+	which they appear in the plugin list.
 */
 message Synth {
 	repeated Plugin plugins = 1;

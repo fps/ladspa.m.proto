@@ -1,10 +1,11 @@
 from ladspam_pb2 import *
 import random
 
+# Returns the index of the added plugin
 def add_plugin(synth, label):
 	plugin = synth.plugins.add()
 	plugin.label = label
-	return plugin
+	return len(synth.plugins) - 1
 
 def make_connection(synth, source_index, source_port_index, sink_index, sink_port_index):
 	connection = synth.connections.add()
@@ -20,7 +21,8 @@ def make_voice_connection(instrument, source_index, source_port_index, sink_inde
 	connection.sink_index = sink_index
 	connection.sink_port_index = sink_port_index
 
-def set_port_value(plugin, port_index, the_value):
+def set_port_value(synth, plugin_index, port_index, the_value):
+	plugin = synth.plugins[plugin_index]
 	value = plugin.values.add()
 	value.port_index = port_index
 	value.value = the_value
@@ -42,71 +44,63 @@ instrument.number_of_voices = number_of_voices
 
 synth = instrument.synth
 
-plugin_index = 0
+voice_outs = []
 
 for n in range(number_of_voices):
-	plugin = add_plugin(synth, 'dahdsr_fexp')
-	env = plugin_index	
+	env = add_plugin(synth, 'dahdsr_fexp')
 
-	set_port_value(plugin, 2, 0.0)
-	set_port_value(plugin, 3, 0.0)
-	set_port_value(plugin, 4, 0.0)
-	set_port_value(plugin, 5, 0.8)
-	set_port_value(plugin, 6, 0.3)
-	set_port_value(plugin, 7, 0.2)
+	set_port_value(synth, env, 2, 0.0)
+	set_port_value(synth, env, 3, 0.0)
+	set_port_value(synth, env, 4, 0.0)
+	set_port_value(synth, env, 5, 0.8)
+	set_port_value(synth, env, 6, 0.3)
+	set_port_value(synth, env, 7, 0.2)
 	
-	
-	plugin_index += 1
+	osc = add_plugin(synth, 'sawtooth_fa_oa')
 
-	plugin = add_plugin(synth, 'sawtooth_fa_oa')
-	osc = plugin_index
+	env_prod = add_plugin(synth, 'product_iaia_oa')
 
-	plugin_index += 1
+	make_connection(synth, env, 8, env_prod, 0)
+	make_connection(synth, osc, 1, env_prod, 1)
 
-	add_plugin(synth, 'product_iaia_oa')
-	prod = plugin_index
-
-	make_connection(synth, env, 8, prod, 0)
-	make_connection(synth, osc, 1, prod, 1)
-
-	#print(plugin_index - 2, 8, plugin_index - 1, 1)
-	 
 	make_voice_connection(instrument, n, TRIGGER, env, 1)
 	make_voice_connection(instrument, n, GATE, env, 0)
 	make_voice_connection(instrument, n, FREQUENCY, osc, 0)
 
-	plugin_index += 1
+	vel_prod = add_plugin(synth, 'product_iaia_oa')
+	make_voice_connection(instrument, n, VELOCITY, vel_prod, 0)
+	make_connection(synth, env_prod, 2, vel_prod, 1)
 
-	plugin = add_plugin(synth, 'tap_autopan')
-	pan = plugin_index
+	pan = add_plugin(synth, 'tap_autopan')
 
-	set_port_value(plugin, 0, random.uniform(1, 5))
-	set_port_value(plugin, 1, 50)
+	set_port_value(synth, pan, 0, random.uniform(0.1, 0.2))
+	set_port_value(synth, pan, 1, 50)
+	set_port_value(synth, pan, 2, 0)
 
-	make_connection(synth, prod, 2, pan, 3)
-	make_connection(synth, prod, 2, pan, 4)
-
-	plugin_index += 1
+	make_connection(synth, vel_prod, 2, pan, 3)
+	make_connection(synth, vel_prod, 2, pan, 4)
 	
+	voice_outs.append(pan)
 
-add_plugin(synth, 'sum_iaia_oa')
-sum1 = plugin_index
 
-expose_port(synth, sum1, 2)
-plugin_index += 1
+sum1 = add_plugin(synth, 'sum_iaia_oa')
+sum2 = add_plugin(synth, 'sum_iaia_oa')
 
-	
-add_plugin(synth, 'sum_iaia_oa')
-sum2 = plugin_index
-
-expose_port(synth, sum2, 2)
-plugin_index += 1
-	
 for n in range(number_of_voices):
-	make_connection(synth, 4 * n + 3, 5, plugin_index - 1, 0)
-	make_connection(synth, 4 * n + 3, 6, plugin_index - 2, 0)
+	make_connection(synth, voice_outs[n], 5, sum1, 0)
+	make_connection(synth, voice_outs[n], 6, sum2, 0)
 	pass
 
+final_pan = add_plugin(synth, 'tap_autopan')
+set_port_value(synth, final_pan, 0, 0.1)
+set_port_value(synth, final_pan, 1, 50)
+
+make_connection(synth, sum1, 2, final_pan, 3)
+make_connection(synth, sum2, 2, final_pan, 4)
+
+expose_port(synth, final_pan, 5)
+expose_port(synth, final_pan, 6)
+	
 f = open("/dev/stdout", "wb")
 f.write(instrument.SerializeToString())
 f.close()

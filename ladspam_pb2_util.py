@@ -1,5 +1,11 @@
 from ladspam_pb2 import *
 
+def dump_instrument(instrument):
+	f = open("/dev/stdout", "wb")
+	f.write(instrument.SerializeToString())
+	f.close()
+
+
 # Returns the index of the added plugin
 def add_plugin(synth, label):
 	plugin = synth.plugins.add()

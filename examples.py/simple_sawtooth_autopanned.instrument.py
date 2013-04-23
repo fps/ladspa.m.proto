@@ -58,7 +58,5 @@ for n in range(number_of_voices):
 expose_port(synth, sum1, 2)
 expose_port(synth, sum2, 2)
 	
-f = open("/dev/stdout", "wb")
-f.write(instrument.SerializeToString())
-f.close()
+dump_instrument(instrument)
 

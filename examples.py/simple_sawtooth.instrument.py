@@ -46,6 +46,5 @@ for n in range(number_of_voices):
 	make_connection(synth, voice_outs[n], 3, sum, 0)
 	pass
 
-f = open("/dev/stdout", "wb")
-f.write(instrument.SerializeToString())
-f.close()
+dump_instrument(instrument)
+

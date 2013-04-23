@@ -19,5 +19,5 @@ install: all
 
 
 examples:  
-	generate_examples.sh
+	bash generate_examples.sh
 

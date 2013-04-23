@@ -73,8 +73,8 @@ for n in range(number_of_voices):
 
 	pan = add_plugin(synth, 'tap_autopan')
 
-	set_port_value(synth, pan, 0, random.uniform(0.1, 0.2))
-	set_port_value(synth, pan, 1, 50)
+	set_port_value(synth, pan, 0, random.uniform(0.5, 1.2))
+	set_port_value(synth, pan, 1, 90)
 	set_port_value(synth, pan, 2, 0)
 
 	make_connection(synth, vel_prod, 2, pan, 3)
@@ -91,15 +91,8 @@ for n in range(number_of_voices):
 	make_connection(synth, voice_outs[n], 6, sum2, 0)
 	pass
 
-final_pan = add_plugin(synth, 'tap_autopan')
-set_port_value(synth, final_pan, 0, 0.1)
-set_port_value(synth, final_pan, 1, 50)
-
-make_connection(synth, sum1, 2, final_pan, 3)
-make_connection(synth, sum2, 2, final_pan, 4)
-
-expose_port(synth, final_pan, 5)
-expose_port(synth, final_pan, 6)
+expose_port(synth, sum1, 2)
+expose_port(synth, sum2, 2)
 	
 f = open("/dev/stdout", "wb")
 f.write(instrument.SerializeToString())

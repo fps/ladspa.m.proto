@@ -3,6 +3,7 @@
 PREFIX ?= /usr/local
 
 all: libladspam.pb.so
+	python2 setup.py build
 
 libladspam.pb.so: generated
 	g++ -shared -fPIC -o libladspam.pb.so ladspam.pb.cc `pkg-config protobuf --cflags --libs`
@@ -16,7 +17,7 @@ install: all
 	install libladspam.pb.so $(PREFIX)/lib
 	install -d $(PREFIX)/include
 	install ladspam.pb.h $(PREFIX)/include
-	python setup.py install
+	python2 setup.py install
 
 
 examples:  

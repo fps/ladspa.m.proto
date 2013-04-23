@@ -4,9 +4,9 @@ Protobuf definitions for defining synths and instruments made up of LADSPA synth
 
 # What?
 
-The ladspam.proto file defines a message/file format for synth/instrument definitions. The generated libraries (C++ and python) can be used to read/write these definition files. See the example 
+The ladspam.proto file defines a message/file format for synth/instrument definitions. The generated libraries (C++ and python) can be used to read/write these definition files. See the examples 
 
-https://github.com/fps/ladspa.m.proto/blob/master/example_instrument.py
+https://github.com/fps/ladspa.m.proto/blob/master/examples
 
 for a python script that generates and instrument definition file for a simple polyphonic instrument with sawtooth oscillators and exponential envelopes.
 

@@ -13,7 +13,7 @@ def make_connection(synth, source_index, source_port_index, sink_index, sink_por
 	connection.sink_port_index = sink_port_index
 	
 def make_voice_connection(instrument, source_index, source_port_index, sink_index, sink_port_index):
-	connection = instrument.connections.add()
+	connection = instrument.voice_connections.add()
 	connection.source_index = source_index
 	connection.source_port_index = source_port_index
 	connection.sink_index = sink_index

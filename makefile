@@ -16,6 +16,7 @@ install: all
 	install libladspam.pb.so $(PREFIX)/lib
 	install -d $(PREFIX)/include
 	install ladspam.pb.h $(PREFIX)/include
+	python setup.py install
 
 
 examples:  

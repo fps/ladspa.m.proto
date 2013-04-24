@@ -37,7 +37,7 @@ for n in range(number_of_voices):
 
 	pan = add_plugin(synth, 'tap_autopan')
 
-	set_port_value(synth, pan, 0, random.uniform(3.5, 8.2))
+	set_port_value(synth, pan, 0, random.uniform(1.5, 2.2))
 	set_port_value(synth, pan, 1, 90)
 	set_port_value(synth, pan, 2, 0)
 

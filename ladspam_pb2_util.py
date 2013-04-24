@@ -26,6 +26,13 @@ def make_voice_connection(instrument, source_index, source_port_index, sink_inde
 	connection.sink_index = sink_index
 	connection.sink_port_index = sink_port_index
 
+def make_control_connection(instrument, source_index, source_port_index, sink_index, sink_port_index):
+	connection = instrument.control_connections.add()
+	connection.source_index = source_index
+	connection.source_port_index = source_port_index
+	connection.sink_index = sink_index
+	connection.sink_port_index = sink_port_index
+
 def set_port_value(synth, plugin_index, port_index, the_value):
 	plugin = synth.plugins[plugin_index]
 	value = plugin.values.add()

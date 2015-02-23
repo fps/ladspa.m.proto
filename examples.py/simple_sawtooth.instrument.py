@@ -40,7 +40,7 @@ for n in range(number_of_voices):
 sum = add_plugin(synth, 'sum_iaia_oa')
 
 expose_port(synth, sum, 2)
-expose_port(synth, sum, 2)
+# expose_port(synth, sum, 2)
 
 for n in range(number_of_voices):
 	make_connection(synth, voice_outs[n], 3, sum, 0)

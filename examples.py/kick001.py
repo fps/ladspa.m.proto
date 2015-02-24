@@ -13,9 +13,9 @@ voice_outs = []
 for voice in range(0, number_of_voices):
 	# Envelope for the frequency
 	freq_env = add_plugin(synth, 'dahdsr_fexp')
-	set_port_value(synth, freq_env, 5, 1)
+	set_port_value(synth, freq_env, 5, 0.01)
 	set_port_value(synth, freq_env, 6, 0)
-	set_port_value(synth, freq_env, 7, 0.01)
+	set_port_value(synth, freq_env, 7, 0.1)
 
 	# Hook it up to the voice ports
 	make_voice_connection(instrument, voice, GATE, freq_env, 0)
@@ -56,9 +56,7 @@ for voice in range(0, number_of_voices):
 	amp_env_prod = add_plugin(synth, 'product_iaia_oa')
 
 	make_connection(synth, amp_env, 8, amp_env_prod, 0)
-	make_connection(synth, osc, 2, amp_env_prod, 1)
-	
-	make_connection(synth, osc, 4, amp_env_prod, 1)
+	make_connection(synth, osc, 3, amp_env_prod, 1)
 	
 	voice_outs.append(amp_env_prod)
 	

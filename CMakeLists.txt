@@ -32,7 +32,7 @@ find_package(ProtocolBuffers 7 REQUIRED)
 
 set(CMAKE_VERBOSE_MAKEFILE off)
 
-configure_file(ladspam.proto.in ${PROJECT_SOURCE_DIR}/ladspam.proto @ONLY)
+configure_file(ladspam.proto.in ${PROJECT_SOURCE_DIR}/ladspam${PROJECT_VERSION}.proto @ONLY)
 
 # configure_file(ladspa.m/synth.h.in ladspa.m-${PROJECT_VERSION}/synth.h)
 
@@ -87,8 +87,8 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # TARGETS
 # 
 
-wrap_proto(LADSPAM_PROTOBUF_SOURCE ladspam.proto)
-add_library(ladspa.m-${PROJECT_VERSION}.proto SHARED ${LADSPAM_PROTOBUF_SOURCE})
+wrap_proto(LADSPAM_PROTOBUF_SOURCE ladspam${PROJECT_VERSION}.proto)
+add_library(ladspa.m.proto-${PROJECT_VERSION} SHARED ${LADSPAM_PROTOBUF_SOURCE})
 
 #add_executable(ladspa.m.test.synth-${PROJECT_VERSION} ${PROJECT_BINARY_DIR}/ladspa.m.test.synth.cc)
 #target_link_libraries(ladspa.m.test.synth-${PROJECT_VERSION} ${LADSPAMM_LIBRARIES} ${Boost_LIBRARIES})
@@ -98,6 +98,6 @@ add_library(ladspa.m-${PROJECT_VERSION}.proto SHARED ${LADSPAM_PROTOBUF_SOURCE})
 # 
 
 #install(DIRECTORY ${PROJECT_BINARY_DIR}/ladspa.m-${PROJECT_VERSION}  DESTINATION include)
-#install(FILES ${PROJECT_BINARY_DIR}/ladspa.m-${PROJECT_VERSION}.pc DESTINATION lib/pkgconfig)
-#install(TARGETS ladspa.m.test.synth-${PROJECT_VERSION} RUNTIME DESTINATION bin)
+#install(FILES ${PROJECT_BINARY_DIR}/ladspam DESTINATION lib/pkgconfig)
+install(TARGETS ladspa.m.proto-${PROJECT_VERSION} LIBRARY DESTINATION lib)
 

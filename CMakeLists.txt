@@ -32,7 +32,7 @@ find_package(ProtocolBuffers 7 REQUIRED)
 
 set(CMAKE_VERBOSE_MAKEFILE off)
 
-# configure_file(ladspa.m.pc.in ladspa.m-${PROJECT_VERSION}.pc @ONLY)
+configure_file(ladspa.m.proto.in ladspa.m-${PROJECT_VERSION}.proto @ONLY)
 
 # configure_file(ladspa.m/synth.h.in ladspa.m-${PROJECT_VERSION}/synth.h)
 
@@ -86,6 +86,10 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 #
 # TARGETS
 # 
+
+wrap_proto(LADSPAM_PROTOBUF_SOURCE ladspa.m-${PROJECT_VERSION}.proto)
+add_library(ladspa.m-${PROJECT_VERSION}.proto SHARED ${LADSPAM_PROTOBUF_SOURCE})
+
 #add_executable(ladspa.m.test.synth-${PROJECT_VERSION} ${PROJECT_BINARY_DIR}/ladspa.m.test.synth.cc)
 #target_link_libraries(ladspa.m.test.synth-${PROJECT_VERSION} ${LADSPAMM_LIBRARIES} ${Boost_LIBRARIES})
 

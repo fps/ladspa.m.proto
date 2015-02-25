@@ -33,6 +33,7 @@ find_package(ProtocolBuffers 7 REQUIRED)
 set(CMAKE_VERBOSE_MAKEFILE off)
 
 configure_file(ladspam.proto.in ${PROJECT_SOURCE_DIR}/ladspam${PROJECT_VERSION}.proto @ONLY)
+configure_file(ladspa.m.proto.pc.in ${PROJECT_SOURCE_DIR}/ladspa.m.proto-${PROJECT_VERSION}.pc @ONLY)
 
 # configure_file(ladspa.m/synth.h.in ladspa.m-${PROJECT_VERSION}/synth.h)
 

@@ -1,4 +1,4 @@
-from ladspam_pb2 import *
+from ladspam@PROJECT_VERSION@_pb2 import *
 
 def dump_instrument(instrument):
 	f = open("/dev/stdout", "wb")

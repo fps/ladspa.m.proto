@@ -91,6 +91,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 wrap_proto(LADSPAM_PROTOBUF_SOURCE ladspam${PROJECT_VERSION}.proto)
 add_library(ladspa.m.proto-${PROJECT_VERSION} SHARED ${LADSPAM_PROTOBUF_SOURCE})
+set_target_properties(ladspa.m.proto-${PROJECT_VERSION} PROPERTIES COMPILE_FLAGS "-Wno-conversion")
 
 #add_executable(ladspa.m.test.synth-${PROJECT_VERSION} ${PROJECT_BINARY_DIR}/ladspa.m.test.synth.cc)
 #target_link_libraries(ladspa.m.test.synth-${PROJECT_VERSION} ${LADSPAMM_LIBRARIES} ${Boost_LIBRARIES})

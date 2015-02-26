@@ -102,5 +102,7 @@ set_target_properties(ladspa.m.proto-${PROJECT_VERSION} PROPERTIES COMPILE_FLAGS
 
 #install(DIRECTORY ${PROJECT_BINARY_DIR}/ladspa.m-${PROJECT_VERSION}  DESTINATION include)
 #install(FILES ${PROJECT_BINARY_DIR}/ladspam DESTINATION lib/pkgconfig)
-install(TARGETS ladspa.m.proto-${PROJECT_VERSION} LIBRARY DESTINATION lib)
 
+install(TARGETS ladspa.m.proto-${PROJECT_VERSION} LIBRARY DESTINATION lib)
+install(FILES ladspa.m.proto-${PROJECT_VERSION}.pc  DESTINATION lib/pkgconfig)
+install(FILES ${PROJECT_BINARY_DIR}/ladspam${PROJECT_VERSION}.pb.h DESTINATION include/ladspa.m.proto-${PROJECT_VERSION})

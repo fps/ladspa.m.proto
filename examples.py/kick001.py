@@ -1,4 +1,4 @@
-from ladspam_pb2_util import *
+from ladspam1_pb2_util import *
 
 number_of_voices = 3
 
@@ -12,19 +12,17 @@ voice_outs = []
 
 for voice in range(0, number_of_voices):
 	# Envelope for the frequency
-	freq_env = add_plugin(synth, 'dahdsr_fexp')
-	set_port_value(synth, freq_env, 5, 0.01)
-	set_port_value(synth, freq_env, 6, 0)
-	set_port_value(synth, freq_env, 7, 0.1)
+	freq_env = add_plugin(synth, 'ladspa.m.exp.env')
+	set_port_value(synth, freq_env, 0, 0.002)
 
 	# Hook it up to the voice ports
-	make_voice_connection(instrument, voice, GATE, freq_env, 0)
+	# make_voice_connection(instrument, voice, GATE, freq_env, 0)
 	make_voice_connection(instrument, voice, TRIGGER, freq_env, 1)
 	
 	# Scale up the envelope output to the required frequency sweep
 	freq_env_prod = add_plugin(synth, 'product_iaia_oa')
 	set_port_value(synth, freq_env_prod, 0, 10000)
-	make_connection(synth, freq_env, 8, freq_env_prod, 1)
+	make_connection(synth, freq_env, 2, freq_env_prod, 1)
 
 
 	# We sum the base frequency with the scaled envelope output
@@ -43,19 +41,17 @@ for voice in range(0, number_of_voices):
 	make_voice_connection(instrument, voice, FREQUENCY, osc, 0)
 	 
 	# Envelope for the amplitude
-	amp_env = add_plugin(synth, 'dahdsr_fexp')
-	set_port_value(synth, amp_env, 5, 1)
-	set_port_value(synth, amp_env, 6, 0.0)
-	set_port_value(synth, amp_env, 7, 0.01)
+	amp_env = add_plugin(synth, 'ladspa.m.exp.env')
+	set_port_value(synth, amp_env, 0, 0.1)
 
 	# Hook it up to the voice ports
-	make_voice_connection(instrument, voice, GATE, amp_env, 0)
+	# make_voice_connection(instrument, voice, GATE, amp_env, 0)
 	make_voice_connection(instrument, voice, TRIGGER, amp_env, 1)
 	
 	# A product to scale the oscillator output with the envelope
 	amp_env_prod = add_plugin(synth, 'product_iaia_oa')
 
-	make_connection(synth, amp_env, 8, amp_env_prod, 0)
+	make_connection(synth, amp_env, 2, amp_env_prod, 0)
 	make_connection(synth, osc, 3, amp_env_prod, 1)
 	
 	voice_outs.append(amp_env_prod)

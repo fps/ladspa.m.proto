@@ -1,4 +1,4 @@
-from ladspam_pb2_util import *
+from ladspam1_pb2_util import *
 
 number_of_voices = 3
 

@@ -42,7 +42,7 @@ for voice in range(0, number_of_voices):
 	 
 	# Envelope for the amplitude
 	amp_env = add_plugin(synth, 'ladspa.m.exp.env')
-	set_port_value(synth, amp_env, 0, 0.1)
+	set_port_value(synth, amp_env, 0, 0.05)
 
 	# Hook it up to the voice ports
 	# make_voice_connection(instrument, voice, GATE, amp_env, 0)

@@ -5,7 +5,7 @@ libdir=${exec_prefix}/lib
 
 Name: ladspa.m.proto-@PROJECT_VERSION@
 Description: The ladspa.m.proto library
-Requires:
+Requires: protobuf
 Version: 0.0.1
 Cflags: -I${includedir}/ladspa.m.proto-@PROJECT_VERSION@
-Libs: -lladspam.m.proto-1
+Libs: -lladspa.m.proto-1 

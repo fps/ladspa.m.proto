@@ -27,7 +27,7 @@ enable_testing()
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake-modules")
 
 
-find_package(ProtocolBuffers 7 REQUIRED)
+find_package(Protobuf REQUIRED)
 
 set(PYTHON "python")
 execute_process (COMMAND ${PYTHON} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(prefix='')" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -91,9 +91,13 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # TARGETS
 # 
 
-wrap_proto(LADSPAM_PROTOBUF_SOURCE ladspam${PROJECT_VERSION}.proto)
-add_library(ladspa.m.proto-${PROJECT_VERSION} SHARED ${LADSPAM_PROTOBUF_SOURCE})
+protobuf_generate_cpp(LADSPAM_PROTOBUF_SOURCES LADSPAM_PROTOBUF_HEADERS ladspam${PROJECT_VERSION}.proto)
+add_library(ladspa.m.proto-${PROJECT_VERSION} SHARED ${LADSPAM_PROTOBUF_SOURCES})
 set_target_properties(ladspa.m.proto-${PROJECT_VERSION} PROPERTIES COMPILE_FLAGS "-Wno-conversion")
+
+protobuf_generate_python(LADSPAM_PROTOBUF_PYTHON_SOURCES ladspam${PROJECT_VERSION}.proto)
+add_custom_target(py DEPENDS ${LADSPAM_PROTOBUF_PYTHON_SOURCES})
+add_dependencies(ladspa.m.proto-${PROJECT_VERSION} py)
 
 #add_executable(ladspa.m.test.synth-${PROJECT_VERSION} ${PROJECT_BINARY_DIR}/ladspa.m.test.synth.cc)
 #target_link_libraries(ladspa.m.test.synth-${PROJECT_VERSION} ${LADSPAMM_LIBRARIES} ${Boost_LIBRARIES})
@@ -108,4 +112,4 @@ set_target_properties(ladspa.m.proto-${PROJECT_VERSION} PROPERTIES COMPILE_FLAGS
 install(TARGETS ladspa.m.proto-${PROJECT_VERSION} LIBRARY DESTINATION lib)
 install(FILES ladspa.m.proto-${PROJECT_VERSION}.pc  DESTINATION lib/pkgconfig)
 install(FILES ${PROJECT_BINARY_DIR}/ladspam${PROJECT_VERSION}.pb.h DESTINATION include/ladspa.m.proto-${PROJECT_VERSION})
-install(FILES ladspam${PROJECT_VERSION}_pb2_util.py ${PROJECT_BINARY_DIR}/ladspam1_pb2.py DESTINATION ${PYTHON_SITE_PACKAGES}/)
+install(FILES ${LADSPAM_PROTOBUF_PYTHON_SOURCES} DESTINATION ${PYTHON_SITE_PACKAGES}/)

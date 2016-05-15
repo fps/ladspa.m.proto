@@ -30,7 +30,7 @@ for band in range(start_band, end_band):
         #center_freq = frequency_by_samplerate(note_frequency(center_note), samplerate)
         center_note_freq = note_frequency(center_note)
         center_note_plus_one_freq = note_frequency(center_note_plus_one)
-        bandwidth = 0.1 * (center_note_plus_one_freq - center_note_freq)
+        bandwidth = 1 * (center_note_plus_one_freq - center_note_freq)
 
         bandpass = add_plugin(synth, 'bandpass_iir')
         set_port_value(synth, bandpass, 0, center_note_freq)

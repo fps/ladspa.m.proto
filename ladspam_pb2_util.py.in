@@ -39,10 +39,11 @@ def set_port_value(synth, plugin_index, port_index, the_value):
 	value.port_index = port_index
 	value.value = the_value
 
-def expose_port(synth, plugin_index, port_index):
+def expose_port(synth, plugin_index, port_index, name):
 	port = synth.exposed_ports.add()
-	port.plugin_index = plugin_index
-	port.port_index = port_index
+	port.port.plugin_index = plugin_index
+	port.port.port_index = port_index
+	port.name = name
 	
 TRIGGER = 0
 GATE = 1

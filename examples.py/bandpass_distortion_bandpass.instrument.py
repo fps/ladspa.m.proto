@@ -10,8 +10,8 @@ synth = instrument.synth
 voice_outs = []
 
 input_sum = add_plugin(synth, 'sum_iaia_oa')
-expose_port(synth, input_sum , 0)
-expose_port(synth, input_sum , 1)
+expose_port(synth, input_sum , 0, "input0")
+expose_port(synth, input_sum , 1, "input1")
 
 for n in range(number_of_voices):
 	env = add_plugin(synth, 'dahdsr_fexp')
@@ -46,8 +46,8 @@ for n in range(number_of_voices):
 
 sum = add_plugin(synth, 'sum_iaia_oa')
 
-expose_port(synth, sum, 2)
-expose_port(synth, sum, 2)
+expose_port(synth, sum, 2, "output0")
+expose_port(synth, sum, 2, "output1")
 
 for n in range(number_of_voices):
 	make_connection(synth, voice_outs[n], 2, sum, 0)

@@ -61,8 +61,8 @@ for n in range(number_of_voices):
 	make_connection(synth, voice_outs[n], 6, sum2, 0)
 	pass
 
-expose_port(synth, sum1, 2)
-expose_port(synth, sum2, 2)
+expose_port(synth, sum1, 2, "output0")
+expose_port(synth, sum2, 2, "output1")
 	
 dump_instrument(instrument)
 

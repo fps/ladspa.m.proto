@@ -44,6 +44,11 @@ message Connection {
 	required int32 sink_port_index = 4;
 }
 
+message Port {
+	required int32 plugin_index = 1;
+	required int32 port_index = 2;
+}
+
 /*
 	Use this to specify what ports to expose in a host.
 	
@@ -52,10 +57,10 @@ message Connection {
 	ports, so any exposed ports beyond that will be ignored.
 	Note that you can expose a port more than once.
 */
-message Port {
-	required int32 plugin_index = 1;
-	required int32 port_index = 2;
-}
+message ExposedPort {
+	required Port port = 1;
+	required string name = 2;
+}           
 
 /*
 	A synth.
@@ -67,7 +72,7 @@ message Port {
 message Synth {
 	repeated Plugin plugins = 1;
 	repeated Connection connections = 2;
-	repeated Port exposed_ports = 3;
+	repeated ExposedPort exposed_ports = 3;
 }
 
 /*

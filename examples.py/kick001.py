@@ -62,7 +62,7 @@ set_port_value(synth, sum, 1, 0)
 for voice in range(number_of_voices):
 	make_connection(synth, voice_outs[voice], 2, sum, 0)
 
-expose_port(synth, sum, 2)
+expose_port(synth, sum, 2, "output")
 # expose_port(synth, sum, 2)
 
 dump_instrument(instrument)
